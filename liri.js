@@ -1,8 +1,9 @@
 require('dotenv').config();
 
-// var keys = require("./keys.js");
-var Spotify = require('node-spotify-api');
+var spotify = require("./keys.js");
+// var Spotify = require('node-spotify-api');
 // var spotify = new Spotify(keys.spotify);
+// // console.log(spotify)
 var axios = require("axios");
 
 
@@ -27,7 +28,7 @@ switch (action) {
         break;
 
     case "spotify-this-song":
-        spotifysong(inputs);
+        spotifySong(inputs);
         break;
 
     case "movie-this":
@@ -63,72 +64,101 @@ function concertthis(inputs) {
 
 
 
-// function spotify(inputs) {
-// //   spotifyKeys
-// 	// var spotify = new Spotify(keys.spotify);
-// 		if (!inputs){
-//         	inputs = 'The Sign';
-//     	}
-// 		spotify.search({ type: 'track', query: inputs }, function(err, data) {
-// 			if (err){
-// 	            console.log('Error occurred: ' + err);
-// 	            return;
-// 	        }
+function spotifySong(inputs) {
+    console.log("i am inside spotify function");
+//   spotifyKeys
+	// var spotify = new Spotify(keys.spotify);
+		if (!inputs){
+        	inputs = 'The Sign';
+    	}
+		spotify.search({ type: 'track', query: inputs }, function(err, data) {
+			if (err){
+	            console.log('Error occurred: ' + err);
+	            return;
+	        }
 
-// 	        var songInfo = data.tracks.items;
-// 	        console.log("Artist(s): " + songInfo[0].artists[0].name);
-// 	        console.log("Song Name: " + songInfo[0].name);
-// 	        console.log("Preview Link: " + songInfo[0].preview_url);
-// 	        console.log("Album: " + songInfo[0].album.name);
-// 	});
-// }
+	        var songInfo = data.tracks.items;
+	        console.log("Artist(s): " + songInfo[0].artists[0].name);
+	        console.log("Song Name: " + songInfo[0].name);
+	        console.log("Preview Link: " + songInfo[0].preview_url);
+	        console.log("Album: " + songInfo[0].album.name);
+	});
+}
 // SPOTIFY_ID=fea1c09c46484ac8813eeb7d4725df21
 // SPOTIFY_SECRET=bea9879196554eb5b2c1486af26aff91
-var Spotify = require('node-spotify-api');
+// var Spotify = require('node-spotify-api');
 
-var spotify = new Spotify({
-    id: "fea1c09c46484ac8813eeb7d4725df21",
-    secret: "bea9879196554eb5b2c1486af26aff91",
-});
-
-
+// var spotify = new Spotify({
+//     id: "fea1c09c46484ac8813eeb7d4725df21",
+//     secret: "bea9879196554eb5b2c1486af26aff91",
+// });
 
 
 
+// function spotifysong(){
+//     if (inputs === ""){
+//         inputs = "The Sign";
+//         console.log(inputs)
+//     }
+
+//     spotify.search({ 
+//         type: 'track', 
+//         query: inputs,
+//         limit: 1
+//     }).then(function(response) {
+//         var artist = response.tracks.items[0].artists[0].name;
+//         var song = response.tracks.items[0].name;
+//         var preViewLink = response.tracks.items[0].external_urls.spotify;
+//         var album = response.tracks.items[0].album.name;
+//         console.log("\n------------\n" +
+//                     "\nArtist: " + artist +
+//                     "\nSong Title: " + song +
+//                     "\nPreview Song: " + preViewLink +
+//                     "\nAlbum Name: " + album +
+//                     "\n------------\n")
+//         logInfo();   
+//   })
+//   .catch(function(err) {
+//     console.log(err);
+//   });
+// }
 
 
 
-function spotifysong(inputs) {
-    spotify.search({ type: 'track', query: 'All the Small Things' }, function (err, data) {
-        if (err) {
-            return console.log('Error occurred: ' + err);
-        }
-
-        console.log(data);
-    });
 
 
 
+// function spotifysong(inputs) {
+//     spotify.search({ type: 'track', query: 'All the Small Things' }, function (err, data) {
+//         if (err) {
+//             return console.log('Error occurred: ' + err);
+//         }
+
+//         console.log(data);
+//     });
 
 
 
-    // spotify.search({ type: 'track', query: "all the small things" }, function (err, data) {
 
-    //     if (err) {
-    //         return console.log('Error occurred: ' + err);
-    //     } else {
-    //         console.log("##############################");
-    //         console.log("Artists: " + data.tracks.items[0].artists[0].name); //artists
-    //         console.log("The Song's Name: " + data.tracks.items[0].name); //song name
-    //         console.log("Preview Link: " + data.tracks.items[0].external_urls.spotify); //preview url
-    //         console.log("Album: " + data.tracks.items[0].album.name); //album
-    //         console.log("###############################");
-    //     };
 
-    //     console.log(data.tracks);
 
-    // })
-};
+//     // spotify.search({ type: 'track', query: "all the small things" }, function (err, data) {
+
+//     //     if (err) {
+//     //         return console.log('Error occurred: ' + err);
+//     //     } else {
+//     //         console.log("##############################");
+//     //         console.log("Artists: " + data.tracks.items[0].artists[0].name); //artists
+//     //         console.log("The Song's Name: " + data.tracks.items[0].name); //song name
+//     //         console.log("Preview Link: " + data.tracks.items[0].external_urls.spotify); //preview url
+//     //         console.log("Album: " + data.tracks.items[0].album.name); //album
+//     //         console.log("###############################");
+//     //     };
+
+//     //     console.log(data.tracks);
+
+//     // })
+// };
 
 
 
@@ -168,8 +198,9 @@ function doit() {
 
         // Each command is represented. Because of the format in the txt file, remove the quotes to run these commands. 
         if (dataArr[0] === "spotify-this-song") {
+            // console.log(dataArr[1])
             var songcheck = dataArr[1].slice(1, -1);
-            spotify(songcheck);
+            spotifySong(songcheck);
         }
         else if (dataArr[0] === "concert-this") {
             var concert_name = dataArr[1].slice(1, -1);
